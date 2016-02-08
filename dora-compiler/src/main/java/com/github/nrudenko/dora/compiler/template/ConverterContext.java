@@ -104,9 +104,6 @@ public class ConverterContext extends BaseTemplateContext {
             case LONG:
                 cursorMethod = "getLong";
                 break;
-            case BYTE:
-                cursorMethod = "getByte";
-                break;
             case SHORT:
                 cursorMethod = "getShort";
                 break;

@@ -49,16 +49,4 @@ public class Adapters {
         }
     }
 
-//    public static class BOSAdapter implements IAdapter<Boolean, Integer> {
-//
-//        @Override
-//        public Integer from(Byte[] from) {
-//            return from ? 1 : 0;
-//        }
-//
-//        @Override
-//        public Boolean to(Integer to) {
-//            return to == 1;
-//        }
-//    }
 }

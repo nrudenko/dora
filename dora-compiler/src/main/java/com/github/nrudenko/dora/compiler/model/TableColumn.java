@@ -14,20 +14,19 @@ import static com.github.nrudenko.dora.commons.FieldType.byElement;
 
 public class TableColumn {
 
-    public final String fieldName;
-    public final String fieldTypeName;
+    public String fieldName;
+    public String fieldTypeName;
 
-    public final String name;
-    public final String tableName;
+    public String name;
+    public String tableName;
 
-    public final DbType dbType;
-    public final FieldType fieldType;
+    public DbType dbType;
+    public FieldType fieldType;
 
-    public final String additional;
-    public final boolean isVirtual;
+    public String additional;
+    public boolean isVirtual;
 
     public Adapter adapter;
-
 
     public TableColumn(String fieldName, String fieldTypeName, String name,
                        String tableName, DbType dbType, FieldType fieldType,
@@ -44,47 +43,32 @@ public class TableColumn {
     }
 
     public TableColumn(Element fieldElement, String tableName) throws UnknownFieldType {
+        this.tableName = tableName;
+
         this.fieldName = fieldElement.getSimpleName().toString();
         this.fieldTypeName = fieldElement.asType().toString();
 
-        String name = fieldElement.getSimpleName().toString();
-        FieldType fieldType = byElement(fieldElement);
-        DbType type = null;
-        if (fieldType != null) {
-            type = fieldType.dbType;
-        }
-        String additional = null;
-        boolean isVirtual = false;
+        this.name = fieldElement.getSimpleName().toString();
 
+        this.fieldType = byElement(fieldElement);
+        if (this.fieldType == null) {
+            throw new UnknownFieldType(fieldTypeName, name);
+        }
+        this.dbType = fieldType.dbType;
+
+        this.adapter = getAdapter(name, fieldType);
+
+        tryUpdateFromAnnotation(fieldElement);
+    }
+
+    private void tryUpdateFromAnnotation(Element fieldElement) {
         DbColumn dbColumn = fieldElement.getAnnotation(DbColumn.class);
         if (dbColumn != null) {
-            String customName = dbColumn.name();
-            DbType customType = dbColumn.type();
-            boolean customIsVirtual = dbColumn.isVirtual();
-            additional = dbColumn.additional();
-
-            if (customName.length() > 0) {
-                name = customName;
-            }
-
-            if (customType != DbType.NO_TYPE) {
-                type = customType;
-            }
-
-            isVirtual = customIsVirtual;
+            this.name = TextUtils.isNotEmpty(dbColumn.name()) ? dbColumn.name() : this.name;
+            this.dbType = dbColumn.type() != DbType.NO_TYPE ? dbColumn.type() : this.dbType;
+            this.additional = dbColumn.additional();
+            this.isVirtual = dbColumn.isVirtual();
         }
-
-        this.name = name;
-        this.tableName = tableName;
-        if (type == null) {
-            throw new UnknownFieldType(fieldElement.asType().toString(), name);
-        } else {
-            this.dbType = type;
-        }
-        this.fieldType = fieldType;
-        this.additional = additional;
-        this.isVirtual = isVirtual;
-        this.adapter = getAdapter(name, fieldType);
     }
 
     private Adapter getAdapter(String name, FieldType fieldType) {
@@ -114,14 +98,6 @@ public class TableColumn {
         return adapter;
     }
 
-    public String underscoreName() {
-        return TextUtils.toUnderscore(this.name).toUpperCase();
-    }
-
-    public boolean hasAdditional() {
-        return TextUtils.isNotEmpty(this.additional);
-    }
-
     public String getColumnSql() {
         StringBuilder columnsSql = new StringBuilder();
         columnsSql
@@ -135,6 +111,17 @@ public class TableColumn {
                     .append(additional);
         }
         return columnsSql.toString();
+    }
+
+    public String underscoreName() {
+        return TextUtils.toUnderscore(this.name).toUpperCase();
+    }
+
+    /**
+     * Template needed method
+     **/
+    public boolean hasAdditional() {
+        return TextUtils.isNotEmpty(this.additional);
     }
 
 }

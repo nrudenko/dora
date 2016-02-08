@@ -11,7 +11,6 @@ public enum FieldType {
     STRING(DbType.TEXT, String.class),
     BOOLEAN(DbType.INT, Boolean.class, boolean.class),
     LONG(DbType.NUMERIC, Long.class, long.class),
-    BYTE(DbType.INT, Byte.class, byte.class),
     SHORT(DbType.INT, Short.class, short.class),
     FLOAT(DbType.REAL, Float.class, float.class),
     DOUBLE(DbType.REAL, Double.class, double.class),
