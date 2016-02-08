@@ -1,0 +1,28 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+
+dependencies {
+    compile project(':dora-core')
+
+    compile deps.autoservice
+    compile deps.mustache
+
+    testCompile deps.junit
+    testCompile deps.truth
+    testCompile deps.robolectric
+    testCompile deps.compiletesting
+    testCompile files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
+}
+
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
+}

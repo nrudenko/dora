@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+
+// Manifest version information!
+def versionMajor = 0
+def versionMinor = 1
+def versionPatch = 0
+def versionBuild = 2 // bump for dogfood builds, public betas, etc.
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile project(':dora-core')
+
+    compile 'com.android.support:appcompat-v7:22.2.1'
+
+    testCompile 'org.robolectric:robolectric:2.4'
+    testCompile 'org.mockito:mockito-core:1.9.5'
+    testCompile 'junit:junit:4.12'
+}

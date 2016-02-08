@@ -1,0 +1,10 @@
+apply plugin: 'java'
+
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+
+dependencies {
+    provided deps.android
+}

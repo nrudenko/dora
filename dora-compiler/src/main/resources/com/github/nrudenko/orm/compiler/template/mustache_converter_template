@@ -1,0 +1,42 @@
+package {{converterPackage}};
+
+{{#imports}}
+import {{.}};
+{{/imports}}
+
+/* AUTO-GENERATED FILE */
+public class {{converterClassName}} implements IConverter<{{modelClassName}}> {
+    {{#adapters}}
+        {{{adapterClass}}} {{adapterName}} = new {{{adapterClass}}}{{{constructor}}};
+    {{/adapters}}
+
+    @Override
+    public ContentValues to({{modelClassName}} object) {
+        ContentValues contentValues = new ContentValues();
+        {{#lines}}
+        {{#adapterName}}
+        contentValues.put({{schemeField}}.name, {{adapterName}}.from(object.{{fieldName}}));
+        {{/adapterName}}
+        {{^adapterName}}
+        contentValues.put({{schemeField}}.name, object.{{fieldName}});
+        {{/adapterName}}
+        {{/lines}}
+        return contentValues;
+    }
+
+    @Override
+    public {{modelClassName}} from(Cursor cursor) {
+        {{modelClassName}} object = new {{modelClassName}}();
+        {{#lines}}
+        {{#adapterName}}
+        object.{{fieldName}} = {{adapterName}}.to(cursor.{{cursorMethod}}(cursor.getColumnIndex({{schemeField}}.name)));
+        {{/adapterName}}
+        {{^adapterName}}
+        object.{{fieldName}} = cursor.{{cursorMethod}}(cursor.getColumnIndex({{schemeField}}.name));
+        {{/adapterName}}
+        {{/lines}}
+        return object;
+    }
+
+}
+

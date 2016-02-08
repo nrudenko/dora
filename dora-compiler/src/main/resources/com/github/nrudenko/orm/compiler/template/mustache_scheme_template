@@ -1,0 +1,20 @@
+package {{schemePackage}};
+
+{{#imports}}
+import {{.}};
+{{/imports}}
+
+/* AUTO-GENERATED FILE */
+public final class {{schemeClassName}} implements IScheme{
+
+    public static final String TABLE = "{{tableName}}";
+
+{{#columns}}
+    public static final Column {{underscoreName}} = new Column("{{tableName}}.{{name}}", DbType.{{dbType}}{{#hasAdditional}}, "{{additional}}"{{/hasAdditional}});
+{{/columns}}
+
+    @Override
+    public String getCreateSql(){
+        return "{{createSql}}";
+    }
+}
