@@ -4,10 +4,10 @@ import fixtures.schemes.TestModelScheme;
 import fixtures.TestModel;
 import android.database.Cursor;
 import android.content.ContentValues;
-import com.github.nrudenko.orm.commons.IConverter;
-import com.github.nrudenko.orm.commons.Adapters.EnumAdapter;
+import com.github.nrudenko.dora.commons.IConverter;
+import com.github.nrudenko.dora.commons.Adapters.EnumAdapter;
 import fixtures.TestEnum;
-import com.github.nrudenko.orm.commons.Adapters.DateAdapter;
+import com.github.nrudenko.dora.commons.Adapters.DateAdapter;
 
 /* AUTO-GENERATED FILE */
 public class TestModel$$Converter implements IConverter<TestModel> {

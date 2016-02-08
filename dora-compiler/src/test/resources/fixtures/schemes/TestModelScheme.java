@@ -1,8 +1,8 @@
 package fixtures.schemes;
 
-import com.github.nrudenko.orm.commons.Column;
-import com.github.nrudenko.orm.commons.IScheme;
-import com.github.nrudenko.orm.commons.DbType;
+import com.github.nrudenko.dora.commons.Column;
+import com.github.nrudenko.dora.commons.IScheme;
+import com.github.nrudenko.dora.commons.DbType;
 
 /* AUTO-GENERATED FILE */
 public final class TestModelScheme implements IScheme{
