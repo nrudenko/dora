@@ -1,9 +1,11 @@
 package com.github.nrudenko.dora.query.impl.where;
 
-public class Or extends AbsCondition {
+import com.github.nrudenko.dora.query.ICondition;
+
+public class Or extends AbsWhereCondition {
     public static final String OR = " OR ";
 
-    public Or(com.github.nrudenko.dora.query.ICondition[] conditions) {
+    public Or(ICondition[] conditions) {
         super(conditions);
     }
 

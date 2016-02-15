@@ -2,7 +2,7 @@ package com.github.nrudenko.dora.query.impl.group;
 
 import com.github.nrudenko.dora.query.ISql;
 
-public class SUM implements ISql {
+public class Sum implements ISql {
     @Override
     public String toSql() {
         return null;

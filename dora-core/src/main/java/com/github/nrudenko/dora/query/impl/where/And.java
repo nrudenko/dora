@@ -1,9 +1,11 @@
 package com.github.nrudenko.dora.query.impl.where;
 
-public class And extends AbsCondition {
+import com.github.nrudenko.dora.query.ICondition;
+
+public class And extends AbsWhereCondition {
     public static final String AND = " AND ";
 
-    public And(com.github.nrudenko.dora.query.ICondition[] conditions) {
+    public And(ICondition[] conditions) {
         super(conditions);
     }
 

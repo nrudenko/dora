@@ -1,12 +1,13 @@
 package com.github.nrudenko.dora.query.impl.order;
 
+import com.github.nrudenko.dora.commons.Column;
 import com.github.nrudenko.dora.query.ISql;
 
-public class ASC implements ISql {
+public class Asc implements ISql {
 
-    private final com.github.nrudenko.dora.commons.Column column;
+    private final Column column;
 
-    public ASC(com.github.nrudenko.dora.commons.Column column) {
+    public Asc(Column column) {
         this.column = column;
     }
 

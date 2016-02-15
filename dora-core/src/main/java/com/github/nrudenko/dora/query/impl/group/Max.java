@@ -1,6 +1,8 @@
 package com.github.nrudenko.dora.query.impl.group;
 
-public class MAX implements com.github.nrudenko.dora.query.ISql {
+import com.github.nrudenko.dora.query.ISql;
+
+public class Max implements ISql {
     @Override
     public String toSql() {
         return null;

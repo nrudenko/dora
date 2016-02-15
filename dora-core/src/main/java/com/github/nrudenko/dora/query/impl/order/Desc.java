@@ -3,11 +3,11 @@ package com.github.nrudenko.dora.query.impl.order;
 import com.github.nrudenko.dora.commons.Column;
 import com.github.nrudenko.dora.query.ISql;
 
-public class DESC implements ISql {
+public class Desc implements ISql {
 
     private final Column column;
 
-    public DESC(Column column) {
+    public Desc(Column column) {
         this.column = column;
     }
 

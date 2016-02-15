@@ -2,11 +2,11 @@ package com.github.nrudenko.dora.query.impl.where;
 
 import com.github.nrudenko.dora.query.ICondition;
 
-public abstract class AbsCondition implements ICondition {
+public abstract class AbsWhereCondition implements ICondition {
     protected ICondition[] conditions;
     protected String[] args = new String[0];
 
-    protected AbsCondition(ICondition[] conditions) {
+    protected AbsWhereCondition(ICondition[] conditions) {
         this.conditions = conditions;
         for (int i = 0; i < conditions.length; i++) {
             ICondition condition = conditions[i];
