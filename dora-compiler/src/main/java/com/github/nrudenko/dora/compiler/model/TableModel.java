@@ -33,10 +33,10 @@ public class TableModel {
         this.tableName = getTableName(classElement);
         this.modelName = classElement.getSimpleName().toString();
 
-        fillColumns(classElement);
+        prepareColumns(classElement);
     }
 
-    private void fillColumns(Element classElement) throws UnknownFieldType {
+    private void prepareColumns(Element classElement) throws UnknownFieldType {
         TableColumn _idColumn = new TableColumn(null, "int", "_id",
                 tableName, DbType.INT,
                 FieldType.INTEGER, "PRIMARY KEY AUTOINCREMENT", false, null);
@@ -63,6 +63,12 @@ public class TableModel {
         return TextUtils.toUnderscore(tableName).toLowerCase();
     }
 
+    private boolean shouldSkipElement(Element schemaField) {
+        return !(schemaField.getKind().isField() &&
+                !schemaField.getModifiers().contains(Modifier.STATIC) &&
+                schemaField.getAnnotation(DbSkipField.class) == null);
+    }
+
     private void assertHasEmptyConstructor(Element classElement) throws AbsentConstructorException {
         for (ExecutableElement cons :
                 ElementFilter.constructorsIn(classElement.getEnclosedElements())) {
@@ -71,12 +77,6 @@ public class TableModel {
             }
         }
         throw new AbsentConstructorException();
-    }
-
-    private boolean shouldSkipElement(Element schemaField) {
-        return !(schemaField.getKind().isField() &&
-                !schemaField.getModifiers().contains(Modifier.STATIC) &&
-                schemaField.getAnnotation(DbSkipField.class) == null);
     }
 
 }
