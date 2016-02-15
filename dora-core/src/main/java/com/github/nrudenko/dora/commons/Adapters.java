@@ -19,6 +19,7 @@ public class Adapters {
 
         @Override
         public F to(String to) {
+            //TODO: clarify case when in enum absent value "to"
             return F.valueOf(enumClass, to);
         }
     }

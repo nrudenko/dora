@@ -59,4 +59,12 @@ public class TextUtils {
     public static String toUnderscore(String text) {
         return text.replaceAll("(.)(\\p{Upper})", "$1_$2");
     }
+
+    public static String prepareSqlPlaceHolders(int count) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            result.append(i > 0 ? ",?" : "?");
+        }
+        return result.toString();
+    }
 }

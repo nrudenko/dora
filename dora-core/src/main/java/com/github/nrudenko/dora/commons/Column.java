@@ -1,10 +1,11 @@
 package com.github.nrudenko.dora.commons;
 
-import com.github.nrudenko.dora.TextUtils;
-import com.github.nrudenko.dora.query.impl.Sql;
 import com.github.nrudenko.dora.query.impl.where.Condition;
 
 import java.util.List;
+
+import static com.github.nrudenko.dora.TextUtils.concat;
+import static com.github.nrudenko.dora.TextUtils.prepareSqlPlaceHolders;
 
 public class Column {
 
@@ -30,54 +31,55 @@ public class Column {
         this.additional = additional;
     }
 
-    @Deprecated
-    public String getName() {
-        return name;
-    }
-
-    public boolean isCorrect() {
-        return name != null && name.length() > 0 && type != null && type != DbType.NO_TYPE;
-    }
-
     public Column as(String newName) {
-        return new Column(name + " AS " + newName);
+        return new Column(concat(name, " AS ", newName));
     }
 
     public Condition less(Object value) {
-        return new Condition(name, "%s<?", value.toString());
+        assert value != null : "less value can\'t be null.";
+        return new Condition(name, "%s<?", String.valueOf(value));
     }
 
     public Condition more(Object value) {
-        return new Condition(name, "%s>?", value.toString());
+        assert value != null : "more value can\'t be null.";
+        return new Condition(name, "%s>?", String.valueOf(value));
     }
 
     public Condition is(Object value) {
-        return new Condition(name, "%s=?", value.toString());
+        return new Condition(name, "%s=?", String.valueOf(value));
     }
 
     public Condition isNot(Object value) {
-        return new Condition(name, "%s<>?", value.toString());
+        return new Condition(name, "%s<>?", String.valueOf(value));
     }
 
     public Condition isNull() {
-        return new Condition(name, "%s is NULL");
+        return new Condition(name, "%s is null");
     }
 
     public Condition isNotNull() {
-        return new Condition(name, "%s is NOT NULL");
+        return new Condition(name, "%s is NOT null");
     }
 
     public Condition like(String value) {
+        assert value != null : "like value can\'t be null.";
         return new Condition(name, "%s LIKE ?", value);
     }
 
-    public Condition in(List<Object> in) {
-        String placeHolders = Sql.preparePlaceHolders(in.size());
+    public Condition in(List in) {
+        assert in != null : "in can\'t be null.";
+        String placeHolders = prepareSqlPlaceHolders(in.size());
         String[] params = new String[in.size()];
         for (int i = 0; i < in.size(); i++) {
-            params[i] = in.get(i).toString();
+            params[i] = String.valueOf(in.get(i));
         }
-        return new Condition(name, TextUtils.concat("%s IN (", placeHolders, ")").toString(), params);
+        return new Condition(name, concat("%s IN (", placeHolders, ")"), params);
+    }
+
+    public Condition in(String[] in) {
+        assert in != null : "in can\'t be null.";
+        String placeHolders = prepareSqlPlaceHolders(in.length);
+        return new Condition(name, concat("%s IN (", placeHolders, ")"), in);
     }
 
     public String getTableName() {
