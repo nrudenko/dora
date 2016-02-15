@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply from: '../java_jacoco.gradle'
 
 configurations {
     provided
@@ -7,4 +8,6 @@ configurations {
 
 dependencies {
     provided deps.android
+    testCompile deps.junit
+    testCompile deps.truth
 }
