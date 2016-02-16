@@ -45,6 +45,7 @@ public class AdaptersTest {
         Adapters.DateAdapter dateAdapter = new Adapters.DateAdapter();
         Long from = dateAdapter.from(expectedDate);
         Date actualDate = dateAdapter.to(from);
+
         assertThat(expectedDate).isEqualTo(actualDate);
     }
 }

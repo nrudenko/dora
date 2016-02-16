@@ -2,7 +2,7 @@ package com.github.nrudenko.dora.query.impl.where;
 
 import com.github.nrudenko.dora.query.ICondition;
 
-public class Or extends AbsWhereCondition {
+public class Or extends AbsWhereOperator {
     public static final String OR = " OR ";
 
     public Or(ICondition[] conditions) {
