@@ -1,5 +1,5 @@
 apply plugin: 'java'
-apply from: '../java_jacoco.gradle'
+apply from: '../java_test_coverage.gradle'
 
 dependencies {
     compile project(':dora-core')
