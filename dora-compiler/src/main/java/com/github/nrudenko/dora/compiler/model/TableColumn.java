@@ -6,7 +6,7 @@ import com.github.nrudenko.dora.annotation.DbColumn;
 import com.github.nrudenko.dora.commons.Adapters;
 import com.github.nrudenko.dora.commons.DbType;
 import com.github.nrudenko.dora.commons.FieldType;
-import com.github.nrudenko.dora.compiler.exception.UnknownFieldType;
+import com.github.nrudenko.dora.compiler.exception.UnknownFieldTypeException;
 
 import javax.lang.model.element.Element;
 
@@ -42,7 +42,7 @@ public class TableColumn {
         this.adapter = adapter;
     }
 
-    public TableColumn(Element fieldElement, String tableName) throws UnknownFieldType {
+    public TableColumn(Element fieldElement, String tableName) throws UnknownFieldTypeException {
         this.tableName = tableName;
 
         this.fieldName = fieldElement.getSimpleName().toString();
@@ -52,7 +52,7 @@ public class TableColumn {
 
         this.fieldType = byElement(fieldElement);
         if (this.fieldType == null) {
-            throw new UnknownFieldType(fieldTypeName, name);
+            throw new UnknownFieldTypeException(fieldTypeName, name);
         }
         this.dbType = fieldType.dbType;
 

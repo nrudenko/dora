@@ -6,7 +6,7 @@ import com.github.nrudenko.dora.annotation.Table;
 import com.github.nrudenko.dora.commons.DbType;
 import com.github.nrudenko.dora.commons.FieldType;
 import com.github.nrudenko.dora.compiler.exception.AbsentConstructorException;
-import com.github.nrudenko.dora.compiler.exception.UnknownFieldType;
+import com.github.nrudenko.dora.compiler.exception.UnknownFieldTypeException;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
@@ -24,7 +24,7 @@ public class TableModel {
     public final Set<TableColumn> columns = new LinkedHashSet<>();
     public final String tableName;
 
-    public TableModel(Element classElement) throws AbsentConstructorException, UnknownFieldType {
+    public TableModel(Element classElement) throws AbsentConstructorException, UnknownFieldTypeException {
         assertHasEmptyConstructor(classElement);
 
         PackageElement packageElement = (PackageElement) classElement.getEnclosingElement();
@@ -36,7 +36,7 @@ public class TableModel {
         prepareColumns(classElement);
     }
 
-    private void prepareColumns(Element classElement) throws UnknownFieldType {
+    private void prepareColumns(Element classElement) throws UnknownFieldTypeException {
         TableColumn _idColumn = new TableColumn(null, "int", "_id",
                 tableName, DbType.INT,
                 FieldType.INTEGER, "PRIMARY KEY AUTOINCREMENT", false, null);

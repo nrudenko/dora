@@ -6,7 +6,7 @@ import com.github.nrudenko.dora.commons.DbType;
 
 import java.util.Date;
 
-@Table()
+@Table
 public class TestModel {
     String textField;
 
