@@ -67,4 +67,8 @@ public class TextUtils {
         }
         return result.toString();
     }
+
+    public static boolean isEmpty(String text) {
+        return !isNotEmpty(text);
+    }
 }

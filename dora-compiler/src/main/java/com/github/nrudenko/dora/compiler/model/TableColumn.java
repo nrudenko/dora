@@ -9,8 +9,9 @@ import com.github.nrudenko.dora.commons.FieldType;
 import com.github.nrudenko.dora.compiler.exception.UnknownFieldTypeException;
 
 import javax.lang.model.element.Element;
-
-import static com.github.nrudenko.dora.commons.FieldType.byElement;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeMirror;
 
 public class TableColumn {
 
@@ -50,15 +51,31 @@ public class TableColumn {
 
         this.name = fieldElement.getSimpleName().toString();
 
-        this.fieldType = byElement(fieldElement);
+        this.fieldType = getFieldType(fieldElement);
         if (this.fieldType == null) {
             throw new UnknownFieldTypeException(fieldTypeName, name);
         }
-        this.dbType = fieldType.dbType;
+        this.dbType = DbType.byFieldType(fieldType);
 
         this.adapter = getAdapter(name, fieldType);
 
         tryUpdateFromAnnotation(fieldElement);
+    }
+
+    private FieldType getFieldType(Element fieldElement) {
+        String typeName = null;
+        TypeMirror typeMirror = fieldElement.asType();
+        if (typeMirror instanceof DeclaredType) {
+            Element element = ((DeclaredType) typeMirror).asElement();
+            if (ElementKind.ENUM.equals(element.getKind())) {
+                typeName = Enum.class.getCanonicalName();
+            }
+        }
+        if (TextUtils.isEmpty(typeName)) {
+            typeName = typeMirror.toString();
+        }
+
+        return FieldType.byTypeName(typeName);
     }
 
     private void tryUpdateFromAnnotation(Element fieldElement) {

@@ -38,7 +38,7 @@ public class TableModel {
 
     private void prepareColumns(Element classElement) throws UnknownFieldTypeException {
         TableColumn _idColumn = new TableColumn(null, "int", "_id",
-                tableName, DbType.INT,
+                tableName, DbType.INT_DEFAULT_ZERO,
                 FieldType.INTEGER, "PRIMARY KEY AUTOINCREMENT", false, null);
         columns.add(_idColumn);
 
