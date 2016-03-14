@@ -1,4 +1,4 @@
-package com.github.nrudenko.dora;
+package com.github.nrudenko.dora.android;
 
 import org.junit.runners.model.InitializationError;
 import org.robolectric.RobolectricTestRunner;
@@ -20,7 +20,7 @@ public class DoraTestRunner extends RobolectricTestRunner {
         if (configProperties == null) {
             configProperties = new Properties();
         }
-        String manifestPath = "src/main/AndroidManifest.xml";
+        String manifestPath = "src/test/AndroidManifest.xml";
         FsFile manifestFile = Fs.newFile(new File(manifestPath));
         if (manifestFile.exists()) {
             configProperties.put("manifest", manifestPath);

@@ -1,8 +1,7 @@
-package com.github.nrudenko.dora;
+package com.github.nrudenko.dora.android;
 
 import android.net.Uri;
 
-import com.github.nrudenko.dora.android.UriHelper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

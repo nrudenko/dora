@@ -1,15 +1,21 @@
-package com.github.nrudenko.dora;
+package com.github.nrudenko.dora.android;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.github.nrudenko.dora.sample.DatabaseHelper;
+import com.github.nrudenko.dora.android.db.DoraSQLiteOpenHelper;
+import com.github.nrudenko.dora.commons.IScheme;
 
+import fixtures.schemes.AttachScheme;
+import fixtures.schemes.ExampleModelScheme;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
+
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 
@@ -34,5 +40,27 @@ public class DoraSQLiteOpenHelperTest {
                 "CREATE TABLE IF NOT EXISTS example_model (_id INTEGER DEFAULT 0 PRIMARY KEY " +
                 "AUTOINCREMENT,text TEXT,date NUMERIC,intVal INTEGER DEFAULT 0);"
         );
+    }
+
+
+    public class DatabaseHelper extends DoraSQLiteOpenHelper {
+
+        private static final String DATABASE_NAME = "test.db";
+        private static final int DATABASE_VERSION = 1;
+
+        public DatabaseHelper(Context context) {
+            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        }
+
+        @Override
+        protected void appendSchemes(List<Class<? extends IScheme>> schemes) {
+            schemes.add(AttachScheme.class);
+            schemes.add(ExampleModelScheme.class);
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
     }
 }

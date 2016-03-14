@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.github.nrudenko.dora">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <application>
+        <provider
+            android:name="com.github.nrudenko.dora.android.DummyContentProvider"
+            android:authorities="com.github.nrudenko.dora"
+            android:exported="false"/>
+    </application>
+</manifest>

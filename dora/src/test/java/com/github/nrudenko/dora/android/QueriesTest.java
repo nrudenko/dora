@@ -1,10 +1,9 @@
-package com.github.nrudenko.dora;
+package com.github.nrudenko.dora.android;
 
 import android.content.Context;
-
 import com.github.nrudenko.dora.android.db.QueryBuilder;
-import com.github.nrudenko.dora.sample.model.schemes.AttachScheme;
-import com.github.nrudenko.dora.sample.model.schemes.ExampleModelScheme;
+import fixtures.schemes.AttachScheme;
+import fixtures.schemes.ExampleModelScheme;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
