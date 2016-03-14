@@ -13,3 +13,6 @@ dependencies {
     testCompile files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
 }
 
+targetCompatibility = '1.7'
+sourceCompatibility = '1.7'
+

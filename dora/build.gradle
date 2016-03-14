@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply from: '../android_test_coverage.gradle'
 
 // Manifest version information!
 def versionMajor = 0

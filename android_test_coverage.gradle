@@ -1,0 +1,61 @@
+apply plugin: 'jacoco'
+
+project.android {
+    Task allVariantsTask = tasks.create(
+            name: 'jacocoTestReport',
+            type: DefaultTask,
+            dependsOn: 'test') {
+        group = "Reporting"
+        description = "Generate Jacoco coverage reports"
+    }
+
+    if (hasProperty('libraryVariants')) {
+        libraryVariants.all { variant ->
+            def reportTask = createReportTask(variant)
+            tasks.add(reportTask)
+            allVariantsTask.dependsOn(reportTask)
+        }
+    }
+    if (hasProperty('applicationVariants')) {
+        applicationVariants.all { variant ->
+            def reportTask = createReportTask(variant)
+            tasks.add(reportTask)
+            allVariantsTask.dependsOn(reportTask)
+        }
+    }
+}
+
+def createReportTask(buildVariant) {
+    String testTaskName = "test${buildVariant.name.capitalize()}UnitTest"
+    String reportTaskName = "jacocoTestReport${buildVariant.name.capitalize()}"
+    Task task = task(
+            name: reportTaskName,
+            type: JacocoReport,
+            dependsOn: "${testTaskName}") {
+        group = "Reporting"
+        description = "Generate Jacoco coverage reports for ${buildVariant.name}"
+
+        classDirectories = fileTree(
+                dir: "${project.buildDir}/intermediates/classes/${buildVariant.dirName}",
+                excludes: ['**/R.class',
+                           '**/R$*.class',
+                           '**/*$ViewInjector*.*',
+                           '**/BuildConfig.*',
+                           '**/Manifest*.*',
+                           '**/*_*Factory.*',
+                           '**/*_Provide*Factory.*',
+                           '**/*_MembersInjector.*',
+                ]
+        )
+
+        sourceDirectories = files("src/main/java", "src/${buildVariant.variantData.variantConfiguration.getFlavorName()}/java")
+        executionData = files("${project.buildDir}/jacoco/${testTaskName}.exec")
+
+        reports {
+            xml.enabled = true
+            html.enabled = true
+            html.destination "${buildDir}/jacocoHtml"
+        }
+    }
+    return task
+}
