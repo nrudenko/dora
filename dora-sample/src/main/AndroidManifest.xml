@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <provider
-            android:name="com.github.nrudenko.dora.sample.SimpleContentProvider"
+            android:name="com.github.nrudenko.dora.sample.db.SimpleContentProvider"
             android:authorities="com.github.nrudenko.dora.sample"
             android:exported="false"/>
     </application>
